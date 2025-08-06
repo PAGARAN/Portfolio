@@ -199,28 +199,67 @@ function populateProjects() {
     });
 }
 
-// Contact form handling
+// Contact form handling - Let FormSubmit handle the submission naturally
 const contactForm = document.querySelector('.contact-form');
 contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data
+    // Get form data for validation
     const formData = new FormData(this);
     const name = formData.get('name');
     const email = formData.get('email');
     const message = formData.get('message');
-    
+
     // Simple validation
     if (!name || !email || !message) {
-        alert('Please fill in all fields.');
+        e.preventDefault();
+        showPopup('Please fill in all fields.', 'error');
         return;
     }
-    
-    // Here you would typically send the data to a server
-    // For now, we'll just show a success message
-    alert('Thank you for your message! I\'ll get back to you soon.');
-    this.reset();
+
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+
+    // Let the form submit naturally to FormSubmit
+    // FormSubmit will handle the email sending and redirect
+    showPopup('Sending your message...', 'success');
 });
+
+// Popup message function
+function showPopup(message, type = 'success') {
+    // Remove existing popup
+    const existingPopup = document.querySelector('.popup-message');
+    if (existingPopup) {
+        existingPopup.remove();
+    }
+    
+    // Create popup
+    const popup = document.createElement('div');
+    popup.className = `popup-message ${type}`;
+    popup.innerHTML = `
+        <div class="popup-content">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+            <button class="popup-close">&times;</button>
+        </div>
+    `;
+    
+    document.body.appendChild(popup);
+    
+    // Show popup with animation
+    setTimeout(() => popup.classList.add('show'), 100);
+    
+    // Auto close after 5 seconds
+    setTimeout(() => closePopup(popup), 5000);
+    
+    // Close button functionality
+    popup.querySelector('.popup-close').addEventListener('click', () => closePopup(popup));
+}
+
+function closePopup(popup) {
+    popup.classList.remove('show');
+    setTimeout(() => popup.remove(), 300);
+}
 
 // Intersection Observer for animations
 const observerOptions = {
@@ -334,3 +373,5 @@ function createScrollProgress() {
 
 // Initialize scroll progress
 createScrollProgress();
+
+
