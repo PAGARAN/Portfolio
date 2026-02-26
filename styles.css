@@ -200,6 +200,20 @@ body {
     color: white;
 }
 
+/* Contact form status */
+.form-status {
+    margin-top: 12px;
+    font-size: 0.95rem;
+}
+
+.form-status.success {
+    color: #2f855a;
+}
+
+.form-status.error {
+    color: #c53030;
+}
+
 .social-links {
     display: flex;
     gap: 1rem;

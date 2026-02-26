@@ -199,28 +199,66 @@ function populateProjects() {
     });
 }
 
-// Contact form handling
+// Contact form handling (SMTP API)
 const contactForm = document.querySelector('.contact-form');
-contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = new FormData(this);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const message = formData.get('message');
-    
-    // Simple validation
-    if (!name || !email || !message) {
-        alert('Please fill in all fields.');
+const formStatus = document.querySelector('#form-status');
+
+const contactApiConfig = {
+    endpoint: '/api/contact',
+    redirectUrl: 'thank-you.html'
+};
+
+function setFormStatus(message, type) {
+    if (!formStatus) {
         return;
     }
-    
-    // Here you would typically send the data to a server
-    // For now, we'll just show a success message
-    alert('Thank you for your message! I\'ll get back to you soon.');
-    this.reset();
-});
+    formStatus.textContent = message;
+    formStatus.className = `form-status ${type}`;
+}
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const message = formData.get('message');
+        
+        if (!name || !email || !message) {
+            setFormStatus('Please fill in all fields.', 'error');
+            return;
+        }
+
+        setFormStatus('Sending your message...', 'pending');
+
+        try {
+            const response = await fetch(contactApiConfig.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    message
+                })
+            });
+
+            if (!response.ok) {
+                const result = await response.json().catch(() => ({}));
+                const errorMessage = result.error || 'Sorry, something went wrong. Please try again later.';
+                setFormStatus(errorMessage, 'error');
+                return;
+            }
+
+            this.reset();
+            window.location.href = contactApiConfig.redirectUrl;
+        } catch (error) {
+            setFormStatus('Sorry, something went wrong. Please try again later.', 'error');
+        }
+    });
+}
 
 // Intersection Observer for animations
 const observerOptions = {
