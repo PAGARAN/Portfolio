@@ -39,100 +39,297 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Skills data - you can modify this array to add your skills
+// Skills data
 const skills = [
     {
-        icon: 'fab fa-facebook',
-        title: 'Facebook Ads',
-        description: 'Complete Facebook Ads expertise from beginner to advanced level. Ad creation, targeting, monitoring, and campaign optimization.'
+        icon: 'fas fa-keyboard',
+        title: 'Data Entry',
+        description: 'Accurate data input and record maintenance.'
     },
     {
-        icon: 'fab fa-google',
-        title: 'Google Ads',
-        description: 'Basic Google Ads management including keyword setup, campaign creation, and performance adjustments.'
+        icon: 'fas fa-folder-open',
+        title: 'Organization',
+        description: 'Structured file, document, and task organization.'
     },
     {
-        icon: 'fas fa-palette',
-        title: 'Canva Design',
-        description: 'Social media graphics creation, basic brand kits development, and marketing visual design using Canva.'
+        icon: 'fas fa-comments',
+        title: 'Communication',
+        description: 'Clear client updates and responsive collaboration.'
     },
     {
-        icon: 'fas fa-envelope',
-        title: 'Email Marketing & Automation',
-        description: 'Newsletter creation, email scheduling, list management, and automated email campaign setup.'
+        icon: 'fas fa-clock',
+        title: 'Time Management',
+        description: 'Prioritizes tasks and meets deadlines consistently.'
     },
     {
-        icon: 'fas fa-pen-fancy',
-        title: 'Copywriting & Content',
-        description: 'Writing captions, product descriptions, ad copy, blog posts, and content formatting and uploading.'
+        icon: 'fas fa-desktop',
+        title: 'Computer Literacy',
+        description: 'Confident with digital tools and online workflows.'
     },
     {
-        icon: 'fas fa-share-alt',
-        title: 'Social Media Management',
-        description: 'Post scheduling, content calendar creation, basic engagement monitoring, and social media strategy.'
+        icon: 'fas fa-bolt',
+        title: 'Fast Learner',
+        description: 'Quickly adapts to new tools and processes.'
     },
     {
-        icon: 'fas fa-chart-bar',
-        title: 'Digital Marketing',
-        description: 'Content planning, market research assistance, and basic digital marketing strategy implementation.'
+        icon: 'fas fa-search',
+        title: 'Attention to Detail',
+        description: 'Reviews information carefully for accuracy.'
     },
     {
-        icon: 'fas fa-tasks',
-        title: 'Administrative Support',
-        description: 'Data entry, file organization, calendar management, email handling, document formatting, and spreadsheet tasks.'
+        icon: 'fas fa-sync-alt',
+        title: 'Adaptability',
+        description: 'Flexible and reliable in changing priorities.'
     }
 ];
 
 // Tools data - platforms and software you use
 const tools = [
     {
-        icon: 'fas fa-palette',
-        title: 'Canva',
-        description: 'Professional graphic design for social media, marketing materials, and brand visuals.',
-        category: 'Design'
-    },
-    {
         icon: 'fab fa-google',
         title: 'Google Workspace',
-        description: 'Complete productivity suite including Gmail, Drive, Docs, Sheets, and Calendar management.',
+        description: 'Docs, Sheets, and Calendar for daily productivity.',
         category: 'Productivity'
     },
     {
-        icon: 'fab fa-facebook',
-        title: 'Facebook Ads Manager',
-        description: 'Advanced campaign creation, audience targeting, budget management, and performance analytics.',
-        category: 'Advertising'
+        icon: 'fas fa-file-word',
+        title: 'Microsoft Office',
+        description: 'Word, Excel, and PowerPoint for professional documents.',
+        category: 'Office Suite'
+    },
+    {
+        icon: 'fas fa-headset',
+        title: 'Slack, Zoom, Discord',
+        description: 'Team communication and virtual meetings.',
+        category: 'Communication'
     },
     {
         icon: 'fas fa-tasks',
-        title: 'Trello / Notion',
-        description: 'Project management, task organization, workflow tracking, and team collaboration.',
+        title: 'Trello / Asana',
+        description: 'Project management and task tracking.',
         category: 'Project Management'
     },
     {
-        icon: 'fas fa-envelope',
-        title: 'Mailchimp',
-        description: 'Email marketing campaigns, automation sequences, list management, and basic analytics.',
-        category: 'Email Marketing'
+        icon: 'fab fa-facebook',
+        title: 'Facebook Business Suite',
+        description: 'Social media publishing and page management.',
+        category: 'Social Media'
     }
 ];
 
-// Projects data - you can modify this array to add your projects
+// Experience data
 const projects = [
     {
-        title: 'Facebook Ads Campaign Management',
-        description: 'Managed complete Facebook Ads campaigns from setup to optimization, including audience targeting, ad creation, and performance monitoring for multiple clients.',
-        image: 'fab fa-facebook'
+        title: 'Freelance Virtual Assistant',
+        period: '2022 - 2025',
+        description: 'Managed emails, documents, and digital files; performed accurate data entry and administrative support; communicated clearly with clients and completed tasks on time.',
+        image: 'fas fa-briefcase'
     },
     {
-        title: 'Email Marketing Automation',
-        description: 'Created and managed email marketing campaigns with automated sequences, newsletter design, and list management resulting in improved client engagement.',
-        image: 'fas fa-envelope'
+        title: 'Marketing Manager & Specialist',
+        period: '2022 - 2025',
+        description: 'Supported marketing and online tasks while maintaining reliable task completion and timely updates.',
+        image: 'fas fa-bullhorn'
     },
     {
-        title: 'Content & Design Package',
-        description: 'Developed comprehensive content strategy including blog writing, social media graphics in Canva, copywriting for ads, and social media management.',
-        image: 'fas fa-palette'
+        title: 'Executive Administrative Partner',
+        period: '2022 - 2025',
+        description: 'Assisted with daily administrative and online tasks; organized records and maintained accurate information.',
+        image: 'fas fa-user-tie'
+    },
+    {
+        title: 'Admin Support & Specialist',
+        period: '2022 - 2025',
+        description: 'Provided administrative support with a focus on accuracy and organization.',
+        image: 'fas fa-clipboard-list'
+    },
+    {
+        title: 'Records and Data Organization',
+        period: '2022 - 2025',
+        description: 'Organized records and ensured information accuracy and completeness.',
+        image: 'fas fa-folder-tree'
+    },
+    {
+        title: 'Skills Development / Self-Training',
+        period: '2022 - 2026',
+        description: 'Practiced accurate data input and spreadsheet management; reviewed information carefully to ensure accuracy and completeness.',
+        image: 'fas fa-graduation-cap'
+    }
+];
+
+// Education data
+const education = [
+    {
+        school: 'Northern Bukidnon College',
+        program: 'Bachelor of General Education',
+        period: '2023 - Present',
+        details: [
+            'GPA: 95',
+            'Demonstrated strong analytical and written communication skills.',
+            'Maintained strong academic performance.',
+            'Developed skills in research, documentation, and communication.',
+            'Strengthened time management and digital productivity skills.'
+        ]
+    },
+    {
+        school: 'Libona Bukidnon National High School',
+        program: 'General Academic Strand',
+        period: '2021 - 2023',
+        details: []
+    }
+];
+
+// Languages data
+const languages = [
+    {
+        language: 'English',
+        level: 'Fluent'
+    },
+    {
+        language: 'Bisaya',
+        level: 'Fluent'
+    },
+    {
+        language: 'Filipino',
+        level: 'Basic'
+    }
+];
+
+// Work samples data
+function createWorkImage(title, colorStart, colorEnd) {
+    const svg = `
+        <svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'>
+            <defs>
+                <linearGradient id='grad' x1='0' y1='0' x2='1' y2='1'>
+                    <stop offset='0%' stop-color='${colorStart}' />
+                    <stop offset='100%' stop-color='${colorEnd}' />
+                </linearGradient>
+            </defs>
+            <rect width='800' height='500' fill='url(#grad)' />
+            <rect x='60' y='60' width='680' height='380' rx='32' fill='rgba(255,255,255,0.18)' />
+            <text x='400' y='260' text-anchor='middle' font-family='Poppins, sans-serif' font-size='42' fill='white' font-weight='600'>${title}</text>
+        </svg>
+    `;
+    return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
+const workSamples = [
+    {
+        title: 'Administrative Support Samples',
+        description: 'Calendar, inbox, and reporting support workflows.',
+        image: createWorkImage('Admin Support', '#4c1d95', '#8b5cf6'),
+        examples: [
+            {
+                title: 'Inbox Triage',
+                description: 'Prioritized messages with labels, follow-ups, and response tracking.',
+                image: createWorkImage('Inbox Triage', '#5b21b6', '#a78bfa')
+            },
+            {
+                title: 'Calendar Coordination',
+                description: 'Managed availability, scheduling, and reminders for meetings.',
+                image: createWorkImage('Calendar', '#6d28d9', '#c4b5fd')
+            },
+            {
+                title: 'Weekly Reports',
+                description: 'Summarized tasks and outcomes into clean weekly updates.',
+                image: createWorkImage('Reports', '#7c3aed', '#f9a8d4')
+            }
+        ]
+    },
+    {
+        title: 'Graphic Design Samples',
+        description: 'Social graphics, promos, and brand templates.',
+        image: createWorkImage('Graphic Design', '#0f766e', '#2dd4bf'),
+        examples: [
+            {
+                title: 'Promo Post Set',
+                description: 'Created cohesive promo graphics with brand colors.',
+                image: createWorkImage('Promo Posts', '#0f766e', '#5eead4')
+            },
+            {
+                title: 'Story Templates',
+                description: 'Built reusable story layouts for faster content output.',
+                image: createWorkImage('Story Templates', '#0d9488', '#2dd4bf')
+            }
+        ]
+    },
+    {
+        title: 'Social Media Content Samples',
+        description: 'Captions, content plans, and scheduling support.',
+        image: createWorkImage('Social Content', '#f97316', '#fb7185'),
+        examples: [
+            {
+                title: 'Content Calendar',
+                description: 'Planned weekly themes and posting cadence.',
+                image: createWorkImage('Calendar', '#f97316', '#fb7185')
+            },
+            {
+                title: 'Caption Writing',
+                description: 'Wrote engaging captions aligned with brand voice.',
+                image: createWorkImage('Captions', '#fb923c', '#facc15')
+            },
+            {
+                title: 'Engagement Checklist',
+                description: 'Tracked comments and response turnaround.',
+                image: createWorkImage('Engagement', '#fdba74', '#f97316')
+            }
+        ]
+    },
+    {
+        title: 'Education / Tutoring Materials',
+        description: 'Lesson plans, worksheets, and study guides.',
+        image: createWorkImage('Tutoring', '#2563eb', '#38bdf8'),
+        examples: [
+            {
+                title: 'Lesson Outline',
+                description: 'Structured lesson flow with objectives and activities.',
+                image: createWorkImage('Lesson Plan', '#2563eb', '#7dd3fc')
+            },
+            {
+                title: 'Practice Worksheet',
+                description: 'Designed skill drills with answer key notes.',
+                image: createWorkImage('Worksheet', '#0ea5e9', '#38bdf8')
+            }
+        ]
+    },
+    {
+        title: 'E-commerce Support Samples',
+        description: 'Product listings, inventory updates, and order checks.',
+        image: createWorkImage('E-commerce', '#7c2d12', '#fb923c'),
+        examples: [
+            {
+                title: 'Product Listings',
+                description: 'Formatted titles, descriptions, and tags for new items.',
+                image: createWorkImage('Listings', '#7c2d12', '#fdba74')
+            },
+            {
+                title: 'Inventory Tracker',
+                description: 'Maintained stock counts and low-inventory alerts.',
+                image: createWorkImage('Inventory', '#9a3412', '#fb923c')
+            },
+            {
+                title: 'Order Checks',
+                description: 'Verified orders, shipping details, and status updates.',
+                image: createWorkImage('Orders', '#b45309', '#f59e0b')
+            }
+        ]
+    },
+    {
+        title: 'Content Writing Samples',
+        description: 'Blog drafts, product copy, and email content.',
+        image: createWorkImage('Content Writing', '#1e293b', '#64748b'),
+        examples: [
+            {
+                title: 'Blog Draft',
+                description: 'Outlined and drafted a 600-word article with headings.',
+                image: createWorkImage('Blog Draft', '#1e293b', '#94a3b8')
+            },
+            {
+                title: 'Product Copy',
+                description: 'Wrote concise descriptions highlighting key benefits.',
+                image: createWorkImage('Product Copy', '#334155', '#64748b')
+            }
+        ]
     }
 ];
 
@@ -191,11 +388,156 @@ function populateProjects() {
             </div>
             <div class="project-content">
                 <h3>${project.title}</h3>
+                ${project.period ? `<div class="project-period">${project.period}</div>` : ''}
                 <p>${project.description}</p>
-                
             </div>
         `;
         projectsGrid.appendChild(projectCard);
+    });
+}
+
+// Dynamically populate work showcase section
+function populateWorkShowcase() {
+    const workGrid = document.querySelector('.work-grid');
+    if (!workGrid) {
+        return;
+    }
+    workGrid.innerHTML = '';
+
+    workSamples.forEach((sample, index) => {
+        const workCard = document.createElement('button');
+        workCard.className = 'work-card';
+        workCard.type = 'button';
+        workCard.dataset.workIndex = String(index);
+        workCard.innerHTML = `
+            <img src="${sample.image}" alt="${sample.title}">
+            <div class="work-card-body">
+                <h3>${sample.title}</h3>
+                <p>${sample.description}</p>
+            </div>
+        `;
+        workGrid.appendChild(workCard);
+    });
+}
+
+function openWorkModal(sample) {
+    const modal = document.querySelector('#work-modal');
+    const title = document.querySelector('#modal-title');
+    const subtitle = document.querySelector('#modal-subtitle');
+    const grid = document.querySelector('#modal-grid');
+
+    if (!modal || !title || !subtitle || !grid) {
+        return;
+    }
+
+    title.textContent = sample.title;
+    subtitle.textContent = sample.description;
+    grid.innerHTML = '';
+
+    sample.examples.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'modal-card';
+        card.innerHTML = `
+            <img src="${item.image}" alt="${item.title}">
+            <div class="modal-card-body">
+                <h4>${item.title}</h4>
+                <p>${item.description}</p>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeWorkModal() {
+    const modal = document.querySelector('#work-modal');
+    if (!modal) {
+        return;
+    }
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+function setupWorkModal() {
+    const workGrid = document.querySelector('.work-grid');
+    const modal = document.querySelector('#work-modal');
+
+    if (!workGrid || !modal) {
+        return;
+    }
+
+    workGrid.addEventListener('click', event => {
+        const target = event.target.closest('.work-card');
+        if (!target) {
+            return;
+        }
+        const index = Number(target.dataset.workIndex);
+        const sample = workSamples[index];
+        if (sample) {
+            openWorkModal(sample);
+        }
+    });
+
+    modal.addEventListener('click', event => {
+        if (event.target.closest('[data-modal-close]')) {
+            closeWorkModal();
+        }
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeWorkModal();
+        }
+    });
+}
+
+
+// Dynamically populate education section
+function populateEducation() {
+    const educationGrid = document.querySelector('.education-grid');
+    if (!educationGrid) {
+        return;
+    }
+    educationGrid.innerHTML = '';
+
+    education.forEach(item => {
+        const educationCard = document.createElement('div');
+        educationCard.className = 'education-card';
+        const detailsList = item.details.length
+            ? `<ul>${item.details.map(detail => `<li>${detail}</li>`).join('')}</ul>`
+            : '';
+
+        educationCard.innerHTML = `
+            <h3>${item.school}</h3>
+            <div class="education-meta">${item.program} | ${item.period}</div>
+            <div class="education-details">
+                ${detailsList}
+            </div>
+        `;
+        educationGrid.appendChild(educationCard);
+    });
+}
+
+// Dynamically populate languages section
+function populateLanguages() {
+    const languagesGrid = document.querySelector('.languages-grid');
+    if (!languagesGrid) {
+        return;
+    }
+    languagesGrid.innerHTML = '';
+
+    languages.forEach(item => {
+        const languageCard = document.createElement('div');
+        languageCard.className = 'language-card';
+        languageCard.innerHTML = `
+            <h3>${item.language}</h3>
+            <div class="language-level">${item.level}</div>
+        `;
+        languagesGrid.appendChild(languageCard);
     });
 }
 
@@ -277,7 +619,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Add animation styles and observe elements
 function initAnimations() {
-    const animatedElements = document.querySelectorAll('.skill-card, .tool-card, .project-card, .about-text, .contact-info, .contact-form');
+    const animatedElements = document.querySelectorAll('.skill-card, .tool-card, .project-card, .work-card, .work-toggle-card, .education-card, .language-card, .about-text, .contact-info, .contact-form');
 
     animatedElements.forEach(el => {
         el.style.opacity = '0';
@@ -308,6 +650,10 @@ document.addEventListener('DOMContentLoaded', function() {
     populateSkills();
     populateTools();
     populateProjects();
+    populateWorkShowcase();
+    setupWorkModal();
+    populateEducation();
+    populateLanguages();
     initAnimations();
     
     // Add typing effect to hero subtitle
