@@ -239,17 +239,57 @@ const workSamples = [
     {
         title: 'Graphic Design Samples',
         description: 'Social graphics, promos, and brand templates.',
-        image: createWorkImage('Graphic Design', '#0f766e', '#2dd4bf'),
+        image: '/images/1.png',
         examples: [
             {
-                title: 'Promo Post Set',
-                description: 'Created cohesive promo graphics with brand colors.',
-                image: createWorkImage('Promo Posts', '#0f766e', '#5eead4')
+                title: 'Design Sample 1',
+                description: 'Graphic design sample.',
+                image: '/images/1.png'
             },
             {
-                title: 'Story Templates',
-                description: 'Built reusable story layouts for faster content output.',
-                image: createWorkImage('Story Templates', '#0d9488', '#2dd4bf')
+                title: 'Design Sample 2',
+                description: 'Graphic design sample.',
+                image: '/images/2.png'
+            },
+            {
+                title: 'Design Sample 3',
+                description: 'Graphic design sample.',
+                image: '/images/3.png'
+            },
+            {
+                title: 'Design Sample 4',
+                description: 'Graphic design sample.',
+                image: '/images/4.png'
+            },
+            {
+                title: 'Design Sample 5',
+                description: 'Graphic design sample.',
+                image: '/images/5.png'
+            },
+            {
+                title: 'Design Sample 6',
+                description: 'Graphic design sample.',
+                image: '/images/6.png'
+            },
+            {
+                title: 'Design Sample 7',
+                description: 'Graphic design sample.',
+                image: '/images/7.png'
+            },
+            {
+                title: 'Design Sample 8',
+                description: 'Graphic design sample.',
+                image: '/images/8.png'
+            },
+            {
+                title: 'Design Sample 9',
+                description: 'Graphic design sample.',
+                image: '/images/Research%20Poster.png'
+            },
+            {
+                title: 'Design Sample 10',
+                description: 'Graphic design sample.',
+                image: '/images/Screenshot%202026-03-03%20225541.png'
             }
         ]
     },
@@ -438,7 +478,7 @@ function openWorkModal(sample) {
         const card = document.createElement('div');
         card.className = 'modal-card';
         card.innerHTML = `
-            <img src="${item.image}" alt="${item.title}">
+            <img src="${item.image}" alt="${item.title}" data-full="${item.image}">
             <div class="modal-card-body">
                 <h4>${item.title}</h4>
                 <p>${item.description}</p>
@@ -447,9 +487,67 @@ function openWorkModal(sample) {
         grid.appendChild(card);
     });
 
+    grid.querySelectorAll('img[data-full]').forEach(image => {
+        image.addEventListener('click', () => {
+            openImageLightbox(image.dataset.full, image.alt);
+        });
+    });
+
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+}
+
+let lightbox = null;
+
+function ensureLightbox() {
+    if (lightbox) {
+        return;
+    }
+
+    lightbox = document.createElement('div');
+    lightbox.className = 'image-lightbox';
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.innerHTML = `
+        <div class="image-lightbox-overlay" data-lightbox-close></div>
+        <div class="image-lightbox-content" role="dialog" aria-modal="true">
+            <button class="image-lightbox-close" type="button" aria-label="Close" data-lightbox-close>
+                <i class="fas fa-times"></i>
+            </button>
+            <img class="image-lightbox-img" alt="">
+        </div>
+    `;
+
+    document.body.appendChild(lightbox);
+
+    lightbox.addEventListener('click', event => {
+        if (event.target.closest('[data-lightbox-close]')) {
+            closeImageLightbox();
+        }
+    });
+}
+
+function openImageLightbox(src, altText) {
+    ensureLightbox();
+    const image = lightbox.querySelector('.image-lightbox-img');
+    image.src = src;
+    image.alt = altText || 'Work sample image';
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageLightbox() {
+    if (!lightbox) {
+        return;
+    }
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+function isLightboxOpen() {
+    return Boolean(lightbox && lightbox.classList.contains('is-open'));
 }
 
 function closeWorkModal() {
@@ -490,6 +588,10 @@ function setupWorkModal() {
 
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape') {
+            if (isLightboxOpen()) {
+                closeImageLightbox();
+                return;
+            }
             closeWorkModal();
         }
     });
