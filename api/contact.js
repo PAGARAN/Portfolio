@@ -1,17 +1,4 @@
-require('dotenv').config();
-
-const path = require('path');
-const express = require('express');
 const nodemailer = require('nodemailer');
-
-const app = express();
-const basePort = Number(process.env.PORT) || 3000;
-const maxPortRetries = 10;
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-const publicDir = path.join(__dirname, 'public');
-app.use(express.static(publicDir));
 
 const requiredEnv = ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS', 'MAIL_TO'];
 
@@ -34,19 +21,45 @@ function createTransporter() {
     });
 }
 
-app.post('/api/contact', async (req, res) => {
-    const { name, email, message } = req.body || {};
+function parseBody(req) {
+    if (req.body && typeof req.body === 'object') {
+        return req.body;
+    }
+
+    if (typeof req.body === 'string') {
+        try {
+            return JSON.parse(req.body);
+        } catch (error) {
+            return null;
+        }
+    }
+
+    return null;
+}
+
+module.exports = async (req, res) => {
+    if (req.method !== 'POST') {
+        res.statusCode = 405;
+        res.setHeader('Content-Type', 'application/json');
+        return res.end(JSON.stringify({ error: 'Method Not Allowed' }));
+    }
+
+    const body = parseBody(req) || {};
+    const { name, email, message } = body;
 
     if (!name || !email || !message) {
-        return res.status(400).json({ error: 'Please fill in all fields.' });
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'application/json');
+        return res.end(JSON.stringify({ error: 'Please fill in all fields.' }));
     }
 
     if (!isMailerConfigured()) {
-        return res.status(500).json({ error: 'SMTP is not configured. Please check server environment variables.' });
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'application/json');
+        return res.end(JSON.stringify({ error: 'SMTP is not configured. Please check server environment variables.' }));
     }
 
     const senderAddress = process.env.MAIL_FROM || process.env.SMTP_USER;
-
     const emailBody = [
         'You received a new portfolio contact message.',
         '',
@@ -68,37 +81,18 @@ app.post('/api/contact', async (req, res) => {
             text: emailBody
         });
 
-        return res.status(200).json({ ok: true });
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        return res.end(JSON.stringify({ ok: true }));
     } catch (error) {
         console.error('SMTP send error:', error);
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'application/json');
         if (error && error.code === 'EAUTH' && Number(error.responseCode) === 535) {
-            return res.status(500).json({
+            return res.end(JSON.stringify({
                 error: 'SMTP login failed. If you use Gmail, enable 2-Step Verification and use a Gmail App Password.'
-            });
+            }));
         }
-        return res.status(500).json({ error: 'Sorry, something went wrong while sending your message.' });
+        return res.end(JSON.stringify({ error: 'Sorry, something went wrong while sending your message.' }));
     }
-});
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(publicDir, 'index.html'));
-});
-
-function startServer(startPort, attemptsLeft) {
-    const server = app.listen(startPort, () => {
-        console.log(`Portfolio server running on http://localhost:${startPort}`);
-    });
-
-    server.on('error', (error) => {
-        if (error.code === 'EADDRINUSE' && attemptsLeft > 0) {
-            const nextPort = startPort + 1;
-            console.warn(`Port ${startPort} is in use. Retrying on ${nextPort}...`);
-            startServer(nextPort, attemptsLeft - 1);
-            return;
-        }
-
-        throw error;
-    });
-}
-
-startServer(basePort, maxPortRetries);
+};
