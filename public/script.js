@@ -294,24 +294,34 @@ const workSamples = [
         ]
     },
     {
-        title: 'Social Media Content Samples',
-        description: 'Captions, content plans, and scheduling support.',
-        image: createWorkImage('Social Content', '#f97316', '#fb7185'),
+        title: 'Video Editing Samples',
+        description: 'Short-form edits, subtitles, and motion text variations.',
+        image: createWorkImage('Video Editing', '#f97316', '#fb7185'),
         examples: [
             {
-                title: 'Content Calendar',
-                description: 'Planned weekly themes and posting cadence.',
-                image: createWorkImage('Calendar', '#f97316', '#fb7185')
+                title: 'Healthy Liver Tips',
+                description: 'Video editing sample.',
+                videoUrl: '/images/videosamples/Healthy%20Liver%20Tips.mp4'
             },
             {
-                title: 'Caption Writing',
-                description: 'Wrote engaging captions aligned with brand voice.',
-                image: createWorkImage('Captions', '#fb923c', '#facc15')
+                title: 'Motivation',
+                description: 'Video editing sample.',
+                videoUrl: '/images/videosamples/Motivation.mp4'
             },
             {
-                title: 'Engagement Checklist',
-                description: 'Tracked comments and response turnaround.',
-                image: createWorkImage('Engagement', '#fdba74', '#f97316')
+                title: 'Streamer',
+                description: 'Video editing sample.',
+                videoUrl: '/images/videosamples/Streamer.mp4'
+            },
+            {
+                title: 'TheBoss',
+                description: 'Video editing sample.',
+                videoUrl: '/images/videosamples/TheBoss.mp4'
+            },
+            {
+                title: "What's Happening In Dubai",
+                description: 'Video editing sample.',
+                videoUrl: '/images/videosamples/What%27s%20Happening%20In%20Dubai.mp4'
             }
         ]
     },
@@ -510,6 +520,20 @@ function openWorkModal(sample) {
                     <p>${item.description}</p>
                 </div>
             `;
+        } else if (item.videoUrl) {
+            const posterAttr = item.posterUrl ? ` poster="${item.posterUrl}"` : '';
+            card.innerHTML = `
+                <button class="modal-video-preview" type="button" data-video="${item.videoUrl}" aria-label="Play ${item.title}">
+                    <video class="modal-video" muted preload="metadata" playsinline${posterAttr}>
+                        <source src="${item.videoUrl}">
+                    </video>
+                    <span class="modal-video-overlay">Play</span>
+                </button>
+                <div class="modal-card-body">
+                    <h4>${item.title}</h4>
+                    <p>${item.description}</p>
+                </div>
+            `;
         } else if (item.previewUrl) {
             card.innerHTML = `
                 <button class="modal-preview" type="button" data-file="${item.fileUrl}" aria-label="View ${item.title}">
@@ -537,6 +561,12 @@ function openWorkModal(sample) {
         });
     });
 
+    grid.querySelectorAll('.modal-video-preview[data-video]').forEach(button => {
+        button.addEventListener('click', () => {
+            openVideoLightbox(button.dataset.video, button.getAttribute('aria-label'));
+        });
+    });
+
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -544,6 +574,7 @@ function openWorkModal(sample) {
 
 let lightbox = null;
 let fileLightbox = null;
+let videoLightbox = null;
 
 function ensureLightbox() {
     if (lightbox) {
@@ -652,6 +683,61 @@ function isFileLightboxOpen() {
     return Boolean(fileLightbox && fileLightbox.classList.contains('is-open'));
 }
 
+function ensureVideoLightbox() {
+    if (videoLightbox) {
+        return;
+    }
+
+    videoLightbox = document.createElement('div');
+    videoLightbox.className = 'video-lightbox';
+    videoLightbox.setAttribute('aria-hidden', 'true');
+    videoLightbox.innerHTML = `
+        <div class="video-lightbox-overlay" data-video-close></div>
+        <div class="video-lightbox-content" role="dialog" aria-modal="true">
+            <button class="video-lightbox-close" type="button" aria-label="Close" data-video-close>
+                <i class="fas fa-times"></i>
+            </button>
+            <video class="video-lightbox-video" controls playsinline></video>
+        </div>
+    `;
+
+    document.body.appendChild(videoLightbox);
+
+    videoLightbox.addEventListener('click', event => {
+        if (event.target.closest('[data-video-close]')) {
+            closeVideoLightbox();
+        }
+    });
+}
+
+function openVideoLightbox(src, label) {
+    ensureVideoLightbox();
+    const video = videoLightbox.querySelector('.video-lightbox-video');
+    video.src = src;
+    video.setAttribute('aria-label', label || 'Work sample video');
+    videoLightbox.classList.add('is-open');
+    videoLightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    video.play().catch(() => {});
+}
+
+function closeVideoLightbox() {
+    if (!videoLightbox) {
+        return;
+    }
+    const video = videoLightbox.querySelector('.video-lightbox-video');
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+    videoLightbox.classList.remove('is-open');
+    videoLightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+function isVideoLightboxOpen() {
+    return Boolean(videoLightbox && videoLightbox.classList.contains('is-open'));
+}
+
 function closeWorkModal() {
     const modal = document.querySelector('#work-modal');
     if (!modal) {
@@ -692,6 +778,10 @@ function setupWorkModal() {
         if (event.key === 'Escape') {
             if (isFileLightboxOpen()) {
                 closeFileLightbox();
+                return;
+            }
+            if (isVideoLightboxOpen()) {
+                closeVideoLightbox();
                 return;
             }
             if (isLightboxOpen()) {
