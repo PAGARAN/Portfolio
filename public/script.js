@@ -572,7 +572,6 @@ function openWorkModal(sample) {
 
 let lightbox = null;
 let fileLightbox = null;
-let videoLightbox = null;
 const dialogFocusMap = new Map();
 
 function setDialogOpen(dialog, isOpen, closeSelector) {
@@ -709,54 +708,11 @@ function isFileLightboxOpen() {
     return Boolean(fileLightbox && fileLightbox.classList.contains('is-open'));
 }
 
-function ensureVideoLightbox() {
-    if (videoLightbox) {
-        return;
-    }
-
-    videoLightbox = document.createElement('div');
-    videoLightbox.className = 'video-lightbox';
-    videoLightbox.setAttribute('aria-hidden', 'true');
-    videoLightbox.setAttribute('inert', '');
-    videoLightbox.innerHTML = `
-        <div class="video-lightbox-overlay" data-video-close></div>
-        <div class="video-lightbox-content" role="dialog" aria-modal="true">
-            <button class="video-lightbox-close" type="button" aria-label="Close" data-video-close>
-                <i class="fas fa-times"></i>
-            </button>
-            <video class="video-lightbox-video" controls playsinline></video>
-        </div>
-    `;
-
-    document.body.appendChild(videoLightbox);
-
-    videoLightbox.addEventListener('click', event => {
-        if (event.target.closest('[data-video-close]')) {
-            closeVideoLightbox();
-        }
-    });
-}
-
 function openVideoLightbox(src, label) {
     if (!src) {
         return;
     }
     window.open(src, '_blank', 'noopener');
-}
-
-function closeVideoLightbox() {
-    if (!videoLightbox) {
-        return;
-    }
-    const video = videoLightbox.querySelector('.video-lightbox-video');
-    video.pause();
-    video.removeAttribute('src');
-    video.load();
-    setDialogOpen(videoLightbox, false);
-}
-
-function isVideoLightboxOpen() {
-    return Boolean(videoLightbox && videoLightbox.classList.contains('is-open'));
 }
 
 function closeWorkModal() {
@@ -800,10 +756,6 @@ function setupWorkModal() {
         if (event.key === 'Escape') {
             if (isFileLightboxOpen()) {
                 closeFileLightbox();
-                return;
-            }
-            if (isVideoLightboxOpen()) {
-                closeVideoLightbox();
                 return;
             }
             if (isLightboxOpen()) {
