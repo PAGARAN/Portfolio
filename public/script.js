@@ -567,14 +567,46 @@ function openWorkModal(sample) {
         });
     });
 
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    setDialogOpen(modal, true, '.modal-close');
 }
 
 let lightbox = null;
 let fileLightbox = null;
 let videoLightbox = null;
+const dialogFocusMap = new Map();
+
+function setDialogOpen(dialog, isOpen, closeSelector) {
+    if (!dialog) {
+        return;
+    }
+
+    if (isOpen) {
+        dialogFocusMap.set(dialog, document.activeElement);
+        dialog.classList.add('is-open');
+        dialog.setAttribute('aria-hidden', 'false');
+        dialog.removeAttribute('inert');
+        document.body.style.overflow = 'hidden';
+
+        const focusTarget = closeSelector ? dialog.querySelector(closeSelector) : null;
+        if (focusTarget) {
+            focusTarget.focus();
+        }
+        return;
+    }
+
+    const previousFocus = dialogFocusMap.get(dialog);
+    dialogFocusMap.delete(dialog);
+    if (previousFocus && document.contains(previousFocus)) {
+        previousFocus.focus();
+    } else if (document.body) {
+        document.body.focus();
+    }
+
+    dialog.classList.remove('is-open');
+    dialog.setAttribute('aria-hidden', 'true');
+    dialog.setAttribute('inert', '');
+    document.body.style.overflow = '';
+}
 
 function ensureLightbox() {
     if (lightbox) {
@@ -584,6 +616,7 @@ function ensureLightbox() {
     lightbox = document.createElement('div');
     lightbox.className = 'image-lightbox';
     lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.setAttribute('inert', '');
     lightbox.innerHTML = `
         <div class="image-lightbox-overlay" data-lightbox-close></div>
         <div class="image-lightbox-content" role="dialog" aria-modal="true">
@@ -608,18 +641,14 @@ function openImageLightbox(src, altText) {
     const image = lightbox.querySelector('.image-lightbox-img');
     image.src = src;
     image.alt = altText || 'Work sample image';
-    lightbox.classList.add('is-open');
-    lightbox.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    setDialogOpen(lightbox, true, '.image-lightbox-close');
 }
 
 function closeImageLightbox() {
     if (!lightbox) {
         return;
     }
-    lightbox.classList.remove('is-open');
-    lightbox.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    setDialogOpen(lightbox, false);
 }
 
 function isLightboxOpen() {
@@ -634,6 +663,7 @@ function ensureFileLightbox() {
     fileLightbox = document.createElement('div');
     fileLightbox.className = 'file-lightbox';
     fileLightbox.setAttribute('aria-hidden', 'true');
+    fileLightbox.setAttribute('inert', '');
     fileLightbox.innerHTML = `
         <div class="file-lightbox-overlay" data-file-close></div>
         <div class="file-lightbox-content" role="dialog" aria-modal="true">
@@ -663,9 +693,7 @@ function openFileLightbox(src, label) {
     frame.src = src;
     frame.title = label || 'Education file preview';
     download.href = src;
-    fileLightbox.classList.add('is-open');
-    fileLightbox.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    setDialogOpen(fileLightbox, true, '.file-lightbox-close');
 }
 
 function closeFileLightbox() {
@@ -674,9 +702,7 @@ function closeFileLightbox() {
     }
     const frame = fileLightbox.querySelector('.file-lightbox-frame');
     frame.src = '';
-    fileLightbox.classList.remove('is-open');
-    fileLightbox.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    setDialogOpen(fileLightbox, false);
 }
 
 function isFileLightboxOpen() {
@@ -691,6 +717,7 @@ function ensureVideoLightbox() {
     videoLightbox = document.createElement('div');
     videoLightbox.className = 'video-lightbox';
     videoLightbox.setAttribute('aria-hidden', 'true');
+    videoLightbox.setAttribute('inert', '');
     videoLightbox.innerHTML = `
         <div class="video-lightbox-overlay" data-video-close></div>
         <div class="video-lightbox-content" role="dialog" aria-modal="true">
@@ -715,9 +742,7 @@ function openVideoLightbox(src, label) {
     const video = videoLightbox.querySelector('.video-lightbox-video');
     video.src = src;
     video.setAttribute('aria-label', label || 'Work sample video');
-    videoLightbox.classList.add('is-open');
-    videoLightbox.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    setDialogOpen(videoLightbox, true, '.video-lightbox-close');
     video.play().catch(() => {});
 }
 
@@ -729,9 +754,7 @@ function closeVideoLightbox() {
     video.pause();
     video.removeAttribute('src');
     video.load();
-    videoLightbox.classList.remove('is-open');
-    videoLightbox.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    setDialogOpen(videoLightbox, false);
 }
 
 function isVideoLightboxOpen() {
@@ -743,9 +766,7 @@ function closeWorkModal() {
     if (!modal) {
         return;
     }
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    setDialogOpen(modal, false);
 }
 
 function setupWorkModal() {
@@ -755,6 +776,9 @@ function setupWorkModal() {
     if (!workGrid || !modal) {
         return;
     }
+
+    modal.setAttribute('aria-hidden', 'true');
+    modal.setAttribute('inert', '');
 
     workGrid.addEventListener('click', event => {
         const target = event.target.closest('.work-card');
