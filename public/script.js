@@ -301,22 +301,22 @@ const workSamples = [
             {
                 title: 'Healthy Liver Tips',
                 description: 'Video editing sample.',
-                videoUrl: '/images/videosamples/Healthy%20Liver%20Tips.mp4'
+                videoUrl: 'https://drive.google.com/uc?export=download&id=15xw2wwO9vbRTbj6k3UdaAOT4HMVdQx--'
             },
             {
                 title: 'Motivation',
                 description: 'Video editing sample.',
-                videoUrl: '/images/videosamples/Motivation.mp4'
+                videoUrl: 'https://drive.google.com/uc?export=download&id=16TIxMoj0Y3aTC4zIihG1LG8uvOBjaixc'
             },
             {
                 title: 'Streamer',
                 description: 'Video editing sample.',
-                videoUrl: '/images/videosamples/Streamer.mp4'
+                videoUrl: 'https://drive.google.com/uc?export=download&id=1wEdiWlJ-SdtjUmYflBVHhO2EkGMt46os'
             },
             {
                 title: 'TheBoss',
                 description: 'Video editing sample.',
-                videoUrl: '/images/videosamples/TheBoss.mp4'
+                videoUrl: 'https://drive.google.com/uc?export=download&id=1VAdwl8_vCNHRIn2mmn1zsjroGhuX_yJK'
             },
             {
                 title: "What's Happening In Dubai",
