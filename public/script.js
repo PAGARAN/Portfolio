@@ -301,22 +301,22 @@ const workSamples = [
             {
                 title: 'Healthy Liver Tips',
                 description: 'Video editing sample.',
-                videoUrl: 'https://drive.google.com/uc?export=download&id=15xw2wwO9vbRTbj6k3UdaAOT4HMVdQx--'
+                videoUrl: 'https://drive.google.com/file/d/15xw2wwO9vbRTbj6k3UdaAOT4HMVdQx--/view?usp=sharing'
             },
             {
                 title: 'Motivation',
                 description: 'Video editing sample.',
-                videoUrl: 'https://drive.google.com/uc?export=download&id=16TIxMoj0Y3aTC4zIihG1LG8uvOBjaixc'
+                videoUrl: 'https://drive.google.com/file/d/16TIxMoj0Y3aTC4zIihG1LG8uvOBjaixc/view?usp=sharing'
             },
             {
                 title: 'Streamer',
                 description: 'Video editing sample.',
-                videoUrl: 'https://drive.google.com/uc?export=download&id=1wEdiWlJ-SdtjUmYflBVHhO2EkGMt46os'
+                videoUrl: 'https://drive.google.com/file/d/1wEdiWlJ-SdtjUmYflBVHhO2EkGMt46os/view?usp=sharing'
             },
             {
                 title: 'TheBoss',
                 description: 'Video editing sample.',
-                videoUrl: 'https://drive.google.com/uc?export=download&id=1VAdwl8_vCNHRIn2mmn1zsjroGhuX_yJK'
+                videoUrl: 'https://drive.google.com/file/d/1VAdwl8_vCNHRIn2mmn1zsjroGhuX_yJK/view?usp=sharing'
             },
             {
                 title: "What's Happening In Dubai",
@@ -738,12 +738,10 @@ function ensureVideoLightbox() {
 }
 
 function openVideoLightbox(src, label) {
-    ensureVideoLightbox();
-    const video = videoLightbox.querySelector('.video-lightbox-video');
-    video.src = src;
-    video.setAttribute('aria-label', label || 'Work sample video');
-    setDialogOpen(videoLightbox, true, '.video-lightbox-close');
-    video.play().catch(() => {});
+    if (!src) {
+        return;
+    }
+    window.open(src, '_blank', 'noopener');
 }
 
 function closeVideoLightbox() {
