@@ -213,6 +213,41 @@ function createWorkImage(title, colorStart, colorEnd) {
     return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
+function getExamplePreview(item) {
+    if (item.previewImage) {
+        return item.previewImage;
+    }
+    if (item.image) {
+        return item.image;
+    }
+    if (item.previewUrl) {
+        return createWorkImage(item.title, '#1e293b', '#64748b');
+    }
+    if (item.videoUrl) {
+        return createWorkImage(item.title, '#0f172a', '#475569');
+    }
+    return createWorkImage(item.title, '#4b5563', '#9ca3af');
+}
+
+function getExampleLink(item) {
+    if (item.videoUrl) {
+        return item.videoUrl;
+    }
+    if (item.fileUrl) {
+        return item.fileUrl;
+    }
+    if (item.previewImage) {
+        return item.previewImage;
+    }
+    if (item.image) {
+        return item.image;
+    }
+    if (item.previewUrl) {
+        return item.previewUrl;
+    }
+    return '';
+}
+
 const workSamples = [
     {
         title: 'Administrative Support Samples',
@@ -239,57 +274,57 @@ const workSamples = [
     {
         title: 'Graphic Design Samples',
         description: 'Social graphics, promos, and brand templates.',
-        image: '/images/1.png',
+        image: 'images/1.png',
         examples: [
             {
                 title: 'Design Sample 1',
                 description: 'Graphic design sample.',
-                image: '/images/1.png'
+                image: 'images/1.png'
             },
             {
                 title: 'Design Sample 2',
                 description: 'Graphic design sample.',
-                image: '/images/2.png'
+                image: 'images/2.png'
             },
             {
                 title: 'Design Sample 3',
                 description: 'Graphic design sample.',
-                image: '/images/3.png'
+                image: 'images/3.png'
             },
             {
                 title: 'Design Sample 4',
                 description: 'Graphic design sample.',
-                image: '/images/4.png'
+                image: 'images/4.png'
             },
             {
                 title: 'Design Sample 5',
                 description: 'Graphic design sample.',
-                image: '/images/5.png'
+                image: 'images/5.png'
             },
             {
                 title: 'Design Sample 6',
                 description: 'Graphic design sample.',
-                image: '/images/6.png'
+                image: 'images/6.png'
             },
             {
                 title: 'Design Sample 7',
                 description: 'Graphic design sample.',
-                image: '/images/7.png'
+                image: 'images/7.png'
             },
             {
                 title: 'Design Sample 8',
                 description: 'Graphic design sample.',
-                image: '/images/8.png'
+                image: 'images/8.png'
             },
             {
                 title: 'Design Sample 9',
                 description: 'Graphic design sample.',
-                image: '/images/Research%20Poster.png'
+                image: 'images/Research%20Poster.png'
             },
             {
                 title: 'Design Sample 10',
                 description: 'Graphic design sample.',
-                image: '/images/Screenshot%202026-03-03%20225541.png'
+                image: 'images/Screenshot%202026-03-03%20225541.png'
             }
         ]
     },
@@ -301,58 +336,63 @@ const workSamples = [
             {
                 title: 'Healthy Liver Tips',
                 description: 'Video editing sample.',
-                videoUrl: 'https://drive.google.com/file/d/15xw2wwO9vbRTbj6k3UdaAOT4HMVdQx--/view?usp=sharing'
+                videoUrl: 'https://drive.google.com/file/d/15xw2wwO9vbRTbj6k3UdaAOT4HMVdQx--/view?usp=sharing',
+                previewImage: 'images/Healthy%20Liver.png'
             },
             {
                 title: 'Motivation',
                 description: 'Video editing sample.',
-                videoUrl: 'https://drive.google.com/file/d/16TIxMoj0Y3aTC4zIihG1LG8uvOBjaixc/view?usp=sharing'
+                videoUrl: 'https://drive.google.com/file/d/16TIxMoj0Y3aTC4zIihG1LG8uvOBjaixc/view?usp=sharing',
+                previewImage: 'images/Motivation.png'
             },
             {
                 title: 'Streamer',
                 description: 'Video editing sample.',
-                videoUrl: 'https://drive.google.com/file/d/1wEdiWlJ-SdtjUmYflBVHhO2EkGMt46os/view?usp=sharing'
+                videoUrl: 'https://drive.google.com/file/d/1wEdiWlJ-SdtjUmYflBVHhO2EkGMt46os/view?usp=sharing',
+                previewImage: 'images/Streamer.png'
             },
             {
                 title: 'TheBoss',
                 description: 'Video editing sample.',
-                videoUrl: 'https://drive.google.com/file/d/1VAdwl8_vCNHRIn2mmn1zsjroGhuX_yJK/view?usp=sharing'
+                videoUrl: 'https://drive.google.com/file/d/1VAdwl8_vCNHRIn2mmn1zsjroGhuX_yJK/view?usp=sharing',
+                previewImage: 'images/The%20Boss.png'
             },
             {
                 title: "What's Happening In Dubai",
                 description: 'Video editing sample.',
-                videoUrl: '/images/videosamples/What%27s%20Happening%20In%20Dubai.mp4'
+                videoUrl: 'images/videosamples/What%27s%20Happening%20In%20Dubai.mp4',
+                previewImage: 'images/What%27s%20Happening%20In%20Dubai_Thumbnail.jpg'
             }
         ]
     },
     {
         title: 'Education / Tutoring Materials',
         description: 'Lesson plans, worksheets, and study guides.',
-        image: '/images/education/image.png',
+        image: 'images/education/image.png',
         examples: [
             {
                 title: 'Comprehensive English Assessment',
                 description: 'File Sample.',
-                fileUrl: '/images/education/Eng-CAE.pdf',
-                previewUrl: '/images/education/Eng-CAE.pdf'
+                fileUrl: 'images/education/Eng-CAE.pdf',
+                previewUrl: 'images/education/Eng-CAE.pdf'
             },
             {
-                title: 'Length Using Standard and Nonstandard Units',
+                title: 'Length Using Standard and\nNonstandard Units',
                 description: 'File Sample.',
-                fileUrl: '/images/education/Length_Using_Standard_and_NonStandard_Units_Final.pdf',
-                previewUrl: '/images/education/Length_Using_Standard_and_NonStandard_Units_Final.pdf'
+                fileUrl: 'images/education/Length_Using_Standard_and_NonStandard_Units_Final.pdf',
+                previewUrl: 'images/education/Length_Using_Standard_and_NonStandard_Units_Final.pdf'
             },
             {
                 title: 'Detailed Lesson Plan Document',
                 description: 'File Sample.',
-                fileUrl: '/images/education/Noay,%20Krizsha%20%5BDLP%5D.pdf',
-                previewImage: '/images/education/image.png'
+                fileUrl: 'images/education/Noay,%20Krizsha%20%5BDLP%5D.pdf',
+                previewImage: 'images/education/image.png'
             },
             {
                 title: 'Professional Development Plan',
                 description: 'File Sample.',
-                fileUrl: '/images/education/PDP%20ENGLISH.pdf',
-                previewUrl: '/images/education/PDP%20ENGLISH.pdf'
+                fileUrl: 'images/education/PDP%20ENGLISH.pdf',
+                previewUrl: 'images/education/PDP%20ENGLISH.pdf'
             }
         ]
     },
@@ -462,308 +502,48 @@ function populateProjects() {
 
 // Dynamically populate work showcase section
 function populateWorkShowcase() {
-    const workGrid = document.querySelector('.work-grid');
-    if (!workGrid) {
+    const workSections = document.querySelector('#work-sections');
+    if (!workSections) {
         return;
     }
-    workGrid.innerHTML = '';
+    workSections.innerHTML = '';
 
     workSamples.forEach((sample, index) => {
-        const workCard = document.createElement('button');
-        workCard.className = 'work-card';
-        workCard.type = 'button';
-        workCard.dataset.workIndex = String(index);
-        workCard.innerHTML = `
-            <img src="${sample.image}" alt="${sample.title}">
-            <div class="work-card-body">
-                <h3>${sample.title}</h3>
-                <p>${sample.description}</p>
+        const panel = document.createElement('section');
+        panel.className = 'work-panel';
+        panel.innerHTML = `
+            <div class="work-panel-header">
+                <div class="work-panel-title">
+                    <h3>${sample.title}</h3>
+                    <p>${sample.description}</p>
+                </div>
             </div>
+            <div class="work-panel-grid"></div>
         `;
-        workGrid.appendChild(workCard);
-    });
-}
 
-function openWorkModal(sample) {
-    const modal = document.querySelector('#work-modal');
-    const title = document.querySelector('#modal-title');
-    const subtitle = document.querySelector('#modal-subtitle');
-    const grid = document.querySelector('#modal-grid');
-
-    if (!modal || !title || !subtitle || !grid) {
-        return;
-    }
-
-    title.textContent = sample.title;
-    subtitle.textContent = sample.description;
-    grid.innerHTML = '';
-
-    sample.examples.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'modal-card';
-        if (item.previewImage) {
-            card.innerHTML = `
-                <button class="modal-preview" type="button" data-file="${item.fileUrl}" aria-label="View ${item.title}">
-                    <img src="${item.previewImage}" alt="${item.title}">
-                    <span class="modal-preview-overlay">View</span>
-                </button>
-                <div class="modal-card-body">
-                    <h4>${item.title}</h4>
-                    <p>${item.description}</p>
-                </div>
-            `;
-        } else if (item.image) {
-            card.innerHTML = `
-                <img src="${item.image}" alt="${item.title}" data-full="${item.image}">
-                <div class="modal-card-body">
-                    <h4>${item.title}</h4>
-                    <p>${item.description}</p>
-                </div>
-            `;
-        } else if (item.videoUrl) {
-            const posterAttr = item.posterUrl ? ` poster="${item.posterUrl}"` : '';
-            card.innerHTML = `
-                <button class="modal-video-preview" type="button" data-video="${item.videoUrl}" aria-label="Play ${item.title}">
-                    <video class="modal-video" muted preload="metadata" playsinline${posterAttr}>
-                        <source src="${item.videoUrl}">
-                    </video>
-                    <span class="modal-video-overlay">Play</span>
-                </button>
-                <div class="modal-card-body">
-                    <h4>${item.title}</h4>
-                    <p>${item.description}</p>
-                </div>
-            `;
-        } else if (item.previewUrl) {
-            card.innerHTML = `
-                <button class="modal-preview" type="button" data-file="${item.fileUrl}" aria-label="View ${item.title}">
-                    <iframe src="${item.previewUrl}#page=1&view=FitH" title="${item.title}" loading="lazy"></iframe>
-                    <span class="modal-preview-overlay">View</span>
-                </button>
-                <div class="modal-card-body">
-                    <h4>${item.title}</h4>
-                    <p>${item.description}</p>
-                </div>
-            `;
-        }
-        grid.appendChild(card);
-    });
-
-    grid.querySelectorAll('img[data-full]').forEach(image => {
-        image.addEventListener('click', () => {
-            openImageLightbox(image.dataset.full, image.alt);
-        });
-    });
-
-    grid.querySelectorAll('.modal-preview[data-file]').forEach(button => {
-        button.addEventListener('click', () => {
-            openFileLightbox(button.dataset.file, button.getAttribute('aria-label'));
-        });
-    });
-
-    grid.querySelectorAll('.modal-video-preview[data-video]').forEach(button => {
-        button.addEventListener('click', () => {
-            openVideoLightbox(button.dataset.video, button.getAttribute('aria-label'));
-        });
-    });
-
-    setDialogOpen(modal, true, '.modal-close');
-}
-
-let lightbox = null;
-let fileLightbox = null;
-const dialogFocusMap = new Map();
-
-function setDialogOpen(dialog, isOpen, closeSelector) {
-    if (!dialog) {
-        return;
-    }
-
-    if (isOpen) {
-        dialogFocusMap.set(dialog, document.activeElement);
-        dialog.classList.add('is-open');
-        dialog.setAttribute('aria-hidden', 'false');
-        dialog.removeAttribute('inert');
-        document.body.style.overflow = 'hidden';
-
-        const focusTarget = closeSelector ? dialog.querySelector(closeSelector) : null;
-        if (focusTarget) {
-            focusTarget.focus();
-        }
-        return;
-    }
-
-    const previousFocus = dialogFocusMap.get(dialog);
-    dialogFocusMap.delete(dialog);
-    if (previousFocus && document.contains(previousFocus)) {
-        previousFocus.focus();
-    } else if (document.body) {
-        document.body.focus();
-    }
-
-    dialog.classList.remove('is-open');
-    dialog.setAttribute('aria-hidden', 'true');
-    dialog.setAttribute('inert', '');
-    document.body.style.overflow = '';
-}
-
-function ensureLightbox() {
-    if (lightbox) {
-        return;
-    }
-
-    lightbox = document.createElement('div');
-    lightbox.className = 'image-lightbox';
-    lightbox.setAttribute('aria-hidden', 'true');
-    lightbox.setAttribute('inert', '');
-    lightbox.innerHTML = `
-        <div class="image-lightbox-overlay" data-lightbox-close></div>
-        <div class="image-lightbox-content" role="dialog" aria-modal="true">
-            <button class="image-lightbox-close" type="button" aria-label="Close" data-lightbox-close>
-                <i class="fas fa-times"></i>
-            </button>
-            <img class="image-lightbox-img" alt="">
-        </div>
-    `;
-
-    document.body.appendChild(lightbox);
-
-    lightbox.addEventListener('click', event => {
-        if (event.target.closest('[data-lightbox-close]')) {
-            closeImageLightbox();
-        }
-    });
-}
-
-function openImageLightbox(src, altText) {
-    ensureLightbox();
-    const image = lightbox.querySelector('.image-lightbox-img');
-    image.src = src;
-    image.alt = altText || 'Work sample image';
-    setDialogOpen(lightbox, true, '.image-lightbox-close');
-}
-
-function closeImageLightbox() {
-    if (!lightbox) {
-        return;
-    }
-    setDialogOpen(lightbox, false);
-}
-
-function isLightboxOpen() {
-    return Boolean(lightbox && lightbox.classList.contains('is-open'));
-}
-
-function ensureFileLightbox() {
-    if (fileLightbox) {
-        return;
-    }
-
-    fileLightbox = document.createElement('div');
-    fileLightbox.className = 'file-lightbox';
-    fileLightbox.setAttribute('aria-hidden', 'true');
-    fileLightbox.setAttribute('inert', '');
-    fileLightbox.innerHTML = `
-        <div class="file-lightbox-overlay" data-file-close></div>
-        <div class="file-lightbox-content" role="dialog" aria-modal="true">
-            <button class="file-lightbox-close" type="button" aria-label="Close" data-file-close>
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="file-lightbox-toolbar">
-                <a class="file-lightbox-download" href="#" target="_blank" rel="noopener">Open file</a>
-            </div>
-            <iframe class="file-lightbox-frame" title=""></iframe>
-        </div>
-    `;
-
-    document.body.appendChild(fileLightbox);
-
-    fileLightbox.addEventListener('click', event => {
-        if (event.target.closest('[data-file-close]')) {
-            closeFileLightbox();
-        }
-    });
-}
-
-function openFileLightbox(src, label) {
-    ensureFileLightbox();
-    const frame = fileLightbox.querySelector('.file-lightbox-frame');
-    const download = fileLightbox.querySelector('.file-lightbox-download');
-    frame.src = src;
-    frame.title = label || 'Education file preview';
-    download.href = src;
-    setDialogOpen(fileLightbox, true, '.file-lightbox-close');
-}
-
-function closeFileLightbox() {
-    if (!fileLightbox) {
-        return;
-    }
-    const frame = fileLightbox.querySelector('.file-lightbox-frame');
-    frame.src = '';
-    setDialogOpen(fileLightbox, false);
-}
-
-function isFileLightboxOpen() {
-    return Boolean(fileLightbox && fileLightbox.classList.contains('is-open'));
-}
-
-function openVideoLightbox(src, label) {
-    if (!src) {
-        return;
-    }
-    window.open(src, '_blank', 'noopener');
-}
-
-function closeWorkModal() {
-    const modal = document.querySelector('#work-modal');
-    if (!modal) {
-        return;
-    }
-    setDialogOpen(modal, false);
-}
-
-function setupWorkModal() {
-    const workGrid = document.querySelector('.work-grid');
-    const modal = document.querySelector('#work-modal');
-
-    if (!workGrid || !modal) {
-        return;
-    }
-
-    modal.setAttribute('aria-hidden', 'true');
-    modal.setAttribute('inert', '');
-
-    workGrid.addEventListener('click', event => {
-        const target = event.target.closest('.work-card');
-        if (!target) {
-            return;
-        }
-        const index = Number(target.dataset.workIndex);
-        const sample = workSamples[index];
-        if (sample) {
-            openWorkModal(sample);
-        }
-    });
-
-    modal.addEventListener('click', event => {
-        if (event.target.closest('[data-modal-close]')) {
-            closeWorkModal();
-        }
-    });
-
-    document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') {
-            if (isFileLightboxOpen()) {
-                closeFileLightbox();
-                return;
+        const grid = panel.querySelector('.work-panel-grid');
+        sample.examples.forEach(item => {
+            const preview = getExamplePreview(item);
+            const link = getExampleLink(item);
+            const cardTag = link ? 'a' : 'div';
+            const card = document.createElement(cardTag);
+            card.className = 'work-item-card';
+            if (link) {
+                card.href = link;
+                card.target = '_blank';
+                card.rel = 'noopener';
             }
-            if (isLightboxOpen()) {
-                closeImageLightbox();
-                return;
-            }
-            closeWorkModal();
-        }
+            card.innerHTML = `
+                <img src="${preview}" alt="${item.title}">
+                <div class="work-item-card-body">
+                    <h4>${item.title}</h4>
+                    <p>${item.description}</p>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        workSections.appendChild(panel);
     });
 }
 
@@ -891,7 +671,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Add animation styles and observe elements
 function initAnimations() {
-    const animatedElements = document.querySelectorAll('.skill-card, .tool-card, .project-card, .work-card, .work-toggle-card, .education-card, .language-card, .about-text, .contact-info, .contact-form');
+    const animatedElements = document.querySelectorAll('.skill-card, .tool-card, .project-card, .work-panel, .work-item-card, .education-card, .language-card, .about-text, .contact-info, .contact-form');
 
     animatedElements.forEach(el => {
         el.style.opacity = '0';
@@ -923,7 +703,6 @@ document.addEventListener('DOMContentLoaded', function() {
     populateTools();
     populateProjects();
     populateWorkShowcase();
-    setupWorkModal();
     populateEducation();
     populateLanguages();
     initAnimations();
